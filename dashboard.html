@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgriPulse | Farmer Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind-config.js"></script>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface bg-app-gradient">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full bg-glass-fill-light/70 backdrop-blur-md z-50 border-b border-white/40 shadow-[0_8px_32px_rgba(27,67,50,0.08)]">
+<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
+<a class="font-headline-md text-headline-md font-bold text-primary" href="index.html">AgriPulse</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="marketplace.html">Marketplace</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="disease-detection.html">AI Advisor</a>
+<a class="text-leaf-vibrant border-b-2 border-leaf-vibrant font-bold pb-1" href="dashboard.html">Dashboard</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">language</span>
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold cursor-pointer">JS</div>
+</div>
+</div>
+</header>
+<div class="pt-20 flex min-h-screen">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 bg-white/40 border-r border-outline-variant p-6 gap-2 sticky top-20 h-[calc(100vh-80px)] overflow-y-auto">
+<nav class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl sidebar-active font-medium" href="dashboard.html">
+<span class="material-symbols-outlined fill-icon">dashboard</span> Dashboard
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span> Analytics
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container transition-all" href="marketplace.html">
+<span class="material-symbols-outlined">shopping_cart</span> Marketplace
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container transition-all" href="disease-detection.html">
+<span class="material-symbols-outlined">psychology</span> AI Advisor
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+</a>
+</nav>
+<div class="mt-auto pt-6">
+<div class="glass-card p-4 bg-primary-container text-on-primary">
+<p class="font-label-sm uppercase tracking-wider mb-2 opacity-80">Quick Health Check</p>
+<p class="font-body-md mb-4">Run diagnostic on your rice crop now.</p>
+<a class="w-full block text-center bg-leaf-vibrant hover:scale-[1.02] active:scale-95 transition-transform py-2 rounded-lg font-bold text-white text-label-md" href="disease-detection.html">Start Scan</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-gutter max-w-container-max mx-auto overflow-hidden">
+<!-- Market Ticker -->
+<div class="ticker-wrap rounded-xl mb-8">
+<div class="ticker font-label-md">
+<span>🌾 Wheat: ₹2,150/qtl (+2.4%)   •  </span>
+<span>🍚 Rice (Basmati): ₹4,800/qtl (-0.5%)   •  </span>
+<span>🌽 Maize: ₹1,900/qtl (+1.2%)   •  </span>
+<span>🥔 Potato: ₹1,200/qtl (0.0%)   •  </span>
+<span>🌱 Soybeans: ₹5,600/qtl (+3.8%)   •  </span>
+<span>🌾 Wheat: ₹2,150/qtl (+2.4%)   •  </span>
+</div>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">Good Morning, Rajesh</h1>
+<p class="text-on-surface-variant">Here is what's happening at Green Valley Farms today.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-white border border-outline px-4 py-2 rounded-xl font-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span> Oct 24, 2024
+</button>
+<button class="bg-primary-container text-white px-6 py-2 rounded-xl font-bold hover:scale-[1.02] transition-transform">Download Report</button>
+</div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
+<!-- Weather Widget -->
+<div class="md:col-span-4 glass-card p-card-padding flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-accent-gold/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-accent-gold/20 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="font-label-sm text-secondary uppercase tracking-widest mb-1">Local Weather</p>
+<h3 class="font-headline-md text-primary">Ludhiana, PB</h3>
+</div>
+<span class="material-symbols-outlined text-accent-gold text-4xl">sunny</span>
+</div>
+<div class="flex items-end gap-2 mb-6">
+<span class="text-5xl font-bold text-primary tracking-tighter">32°</span>
+<span class="text-2xl text-on-surface-variant font-medium pb-1">C</span>
+<div class="ml-auto text-right">
+<p class="text-label-sm font-bold text-leaf-vibrant">Partly Cloudy</p>
+<p class="text-label-sm text-on-surface-variant">High 34° Low 22°</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-outline-variant pt-6">
+<div class="text-center">
+<span class="material-symbols-outlined text-secondary text-xl mb-1">humidity_percentage</span>
+<p class="font-label-sm text-on-surface-variant">Humidity</p>
+<p class="font-bold text-primary">45%</p>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-secondary text-xl mb-1">rainy</span>
+<p class="font-label-sm text-on-surface-variant">Rainfall</p>
+<p class="font-bold text-primary">0mm</p>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-secondary text-xl mb-1">air</span>
+<p class="font-label-sm text-on-surface-variant">Wind</p>
+<p class="font-bold text-primary">12km/h</p>
+</div>
+</div>
+</div>
+<!-- AI Insights -->
+<div class="md:col-span-5 glass-card p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-leaf-vibrant">auto_awesome</span>
+<h3 class="font-headline-md text-primary">AI Insights</h3>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full text-label-sm">3 New Alerts</span>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant hover:border-leaf-vibrant transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-600">water_drop</span>
+</div>
+<div>
+<p class="font-bold text-primary">Irrigation Alert</p>
+<p class="text-label-md text-on-surface-variant">Soil moisture in Sector B is below 15%. Perfect time for 2-hour irrigation cycle.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant hover:border-error transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-red-600">bug_report</span>
+</div>
+<div>
+<p class="font-bold text-primary">Pest Warning</p>
+<p class="text-label-md text-on-surface-variant">Brown Plant Hopper activity reported in neighboring village farms. Inspect crops.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant hover:border-accent-gold transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-gold">trending_up</span>
+</div>
+<div>
+<p class="font-bold text-primary">Market Opportunity</p>
+<p class="text-label-md text-on-surface-variant">Wheat prices projected to rise by 5% next week. Suggesting delayed harvest if possible.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Links -->
+<div class="md:col-span-3 space-y-6">
+<div class="glass-card p-6 bg-moss-dark text-white h-[48%] flex flex-col justify-between group cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-accent-gold text-3xl">policy</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<div>
+<h4 class="font-headline-md mb-2">PM Kisan Nidhi</h4>
+<p class="text-label-sm opacity-70">Check eligibility and installment status for government schemes.</p>
+</div>
+</div>
+<a class="glass-card p-6 bg-leaf-vibrant text-white h-[48%] flex flex-col justify-between group cursor-pointer" href="disease-detection.html">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-white text-3xl">medical_services</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<div>
+<h4 class="font-headline-md mb-2">Health Check</h4>
+<p class="text-label-sm opacity-80">Upload a leaf photo to diagnose diseases in seconds.</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Marketplace Summary & Orders -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<div class="md:col-span-8 glass-card p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-primary">Recent Orders</h3>
+<a class="text-leaf-vibrant font-bold text-label-md flex items-center gap-1" href="marketplace.html">View Marketplace <span class="material-symbols-outlined text-[18px]">open_in_new</span></a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="text-left border-b border-outline-variant">
+<th class="pb-4 font-label-sm text-on-surface-variant uppercase tracking-wider">Product</th>
+<th class="pb-4 font-label-sm text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="pb-4 font-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="pb-4 font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">grass</span>
+</div>
+<div>
+<p class="font-bold text-primary">Potash Fertilizer</p>
+<p class="text-label-sm text-on-surface-variant">SKU: AG-9283</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-label-md text-on-surface-variant">Oct 22, 2024</td>
+<td class="py-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-label-sm font-bold">Delivered</span></td>
+<td class="py-4 text-right font-bold text-primary">₹3,450.00</td>
+</tr>
+<tr class="group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">opacity</span>
+</div>
+<div>
+<p class="font-bold text-primary">Pesticide Spray Kit</p>
+<p class="text-label-sm text-on-surface-variant">SKU: AG-1122</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-label-md text-on-surface-variant">Oct 20, 2024</td>
+<td class="py-4"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-label-sm font-bold">In Transit</span></td>
+<td class="py-4 text-right font-bold text-primary">₹1,200.00</td>
+</tr>
+<tr class="group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">agriculture</span>
+</div>
+<div>
+<p class="font-bold text-primary">Automatic Sower (Rent)</p>
+<p class="text-label-sm text-on-surface-variant">SKU: RT-4451</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-label-md text-on-surface-variant">Oct 18, 2024</td>
+<td class="py-4"><span class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded-full text-label-sm font-bold">Pending</span></td>
+<td class="py-4 text-right font-bold text-primary">₹850.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Yield Potential -->
+<div class="md:col-span-4 glass-card p-card-padding flex flex-col">
+<h3 class="font-headline-md text-primary mb-6">Yield Potential</h3>
+<div class="flex-1 flex items-center justify-center relative">
+<div class="w-48 h-48 rounded-full border-[12px] border-surface-container relative flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-[12px] border-leaf-vibrant border-r-transparent border-b-transparent transform -rotate-12"></div>
+<div class="text-center">
+<p class="text-4xl font-black text-primary">84%</p>
+<p class="text-label-sm text-on-surface-variant">Efficiency</p>
+</div>
+</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-label-md text-on-surface-variant">Expected Harvest</span>
+<span class="font-bold text-primary">Dec 2024</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md text-on-surface-variant">Projected Yield</span>
+<span class="font-bold text-leaf-vibrant">12.4 Tons</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 mt-2">
+<div class="bg-leaf-vibrant h-2 rounded-full w-4/5"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 px-gutter bg-moss-dark mt-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-container-max mx-auto text-on-primary">
+<div class="space-y-4">
+<div class="font-headline-md text-headline-md font-black text-leaf-vibrant">AgriPulse</div>
+<p class="text-on-primary/60 font-body-md">Empowering farmers with precision technology and real-time market intelligence.</p>
+</div>
+<div>
+<h5 class="font-bold mb-4">Resources</h5>
+<ul class="space-y-2 text-on-primary/60 font-label-sm">
+<li class="hover:text-accent-gold transition-colors cursor-pointer">About Us</li>
+<li class="hover:text-accent-gold transition-colors cursor-pointer">Crop Science</li>
+<li class="hover:text-accent-gold transition-colors cursor-pointer">Knowledge Base</li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4">Legal</h5>
+<ul class="space-y-2 text-on-primary/60 font-label-sm">
+<li class="hover:text-accent-gold transition-colors cursor-pointer">Terms of Service</li>
+<li class="hover:text-accent-gold transition-colors cursor-pointer">Privacy Policy</li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4">Support</h5>
+<p class="text-on-primary/60 font-label-sm mb-4">Need help with your farm analytics?</p>
+<button class="bg-leaf-vibrant px-6 py-2 rounded-xl font-bold hover:bg-secondary transition-colors">Contact Support</button>
+</div>
+</div>
+<div class="max-w-container-max mx-auto mt-12 pt-8 border-t border-primary-container text-center text-on-primary/40 text-label-sm">
+© 2024 AgriPulse Precision. All rights reserved.
+</div>
+</footer>
+<script src="dashboard.js"></script>
+</body>
+</html>

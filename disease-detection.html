@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Krishi Officer | AI Disease Detection</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(circle at top left, #e7f7ef 0%, transparent 35%),
+                linear-gradient(135deg, #f7fbf8 0%, #edf7f1 50%, #f8fcfa 100%);
+            color: #123b2b;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .brand {
+            font-family: "Sora", sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow:
+                0 12px 40px rgba(18, 59, 43, 0.08),
+                0 2px 8px rgba(18, 59, 43, 0.04);
+        }
+
+        .primary {
+            background: #003d2b;
+        }
+
+        .primary-text {
+            color: #003d2b;
+        }
+
+        .green-text {
+            color: #25895d;
+        }
+
+        .green-bg {
+            background: #dff7e9;
+        }
+
+        .nav-link {
+            color: #42524b;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #15855a;
+        }
+
+        .nav-link.active {
+            color: #15855a;
+            border-bottom: 2px solid #15855a;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .icon-lg {
+            width: 42px;
+            height: 42px;
+        }
+
+        .icon-xl {
+            width: 52px;
+            height: 52px;
+        }
+
+        .chat-user {
+            background: #eff7f3;
+            border: 1px solid #d7e8df;
+            padding: 14px 18px;
+            border-radius: 18px 18px 4px 18px;
+            max-width: 85%;
+            margin-left: auto;
+            color: #123b2b;
+        }
+
+        .chat-ai {
+            background: #f1f3f4;
+            padding: 14px 18px;
+            border-radius: 18px 18px 18px 4px;
+            max-width: 90%;
+            color: #293832;
+        }
+
+        .loading {
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.45;
+            }
+        }
+
+        .progress-bar {
+            transition: width 0.7s ease;
+        }
+
+        .language-option {
+            transition: background 0.2s;
+        }
+
+        .language-option:hover {
+            background: #edf9f2;
+        }
+
+        #krishi-chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #krishi-chat-messages::-webkit-scrollbar-thumb {
+            background: #b7d7c8;
+            border-radius: 20px;
+        }
+
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     SVG ICON DEFINITIONS
+========================================================= -->
+
+<svg width="0" height="0" style="position:absolute">
+    <defs>
+
+        <symbol id="icon-leaf" viewBox="0 0 24 24">
+            <path
+                d="M20 4C11 4 5 8 5 15c0 2 1 3 3 3 7 0 11-5 12-14Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M4 21c4-5 7-8 13-11"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-camera" viewBox="0 0 24 24">
+            <path
+                d="M4 7h3l1.5-2h7L17 7h3v12H4V7Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <circle
+                cx="12"
+                cy="13"
+                r="3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+        </symbol>
+
+        <symbol id="icon-upload" viewBox="0 0 24 24">
+            <path
+                d="M12 15V3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <path
+                d="m8 7 4-4 4 4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M5 13v6h14v-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </symbol>
+
+        <symbol id="icon-warning" viewBox="0 0 24 24">
+            <path
+                d="M12 3 2.8 20h18.4L12 3Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M12 9v5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <circle cx="12" cy="17" r="1" fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-agriculture" viewBox="0 0 24 24">
+            <path
+                d="M5 20v-8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <path
+                d="M5 12c0-4 2.5-7 6-8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <path
+                d="M11 4c4 0 7 2 8 6-4 1-7-1-8-6Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M5 20h15"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-bell" viewBox="0 0 24 24">
+            <path
+                d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M10 21h4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-language" viewBox="0 0 24 24">
+            <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+            />
+        </symbol>
+
+        <symbol id="icon-chevron" viewBox="0 0 24 24">
+            <path
+                d="m7 10 5 5 5-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </symbol>
+
+        <symbol id="icon-send" viewBox="0 0 24 24">
+            <path
+                d="m4 4 16 8-16 8 3-8-3-8Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M7 12h12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-mic" viewBox="0 0 24 24">
+            <rect
+                x="8"
+                y="3"
+                width="8"
+                height="12"
+                rx="4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-location" viewBox="0 0 24 24">
+            <path
+                d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <circle
+                cx="12"
+                cy="9"
+                r="2.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+        </symbol>
+
+        <symbol id="icon-person" viewBox="0 0 24 24">
+            <circle
+                cx="12"
+                cy="8"
+                r="3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M5 21c0-4 3-7 7-7s7 3 7 7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </symbol>
+
+        <symbol id="icon-video" viewBox="0 0 24 24">
+            <rect
+                x="3"
+                y="6"
+                width="13"
+                height="12"
+                rx="2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="m16 10 5-3v10l-5-3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+        </symbol>
+
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="m8 12 2.5 2.5L16 9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </symbol>
+
+        <symbol id="icon-info" viewBox="0 0 24 24">
+            <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M12 10v6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <circle cx="12" cy="7" r="1" fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-menu" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+            <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-arrow" viewBox="0 0 24 24">
+            <path
+                d="M5 12h14M13 6l6 6-6 6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </symbol>
+
+    </defs>
+</svg>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-white shadow-md z-50">
+
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- LOGO -->
+        <div class="flex items-center gap-8">
+
+            <a
+                href="index.html"
+                class="brand text-2xl font-extrabold primary-text whitespace-nowrap"
+            >
+                Digital Krishi Officer
+            </a>
+
+            <div class="hidden md:flex items-center gap-7">
+
+                <a
+                    id="nav-marketplace"
+                    href="marketplace.html"
+                    class="nav-link"
+                >
+                    Marketplace
+                </a>
+
+                <a
+                    id="nav-advisor"
+                    href="disease-detection.html"
+                    class="nav-link active"
+                >
+                    AI Advisor
+                </a>
+
+                <a
+                    id="nav-dashboard"
+                    href="dashboard.html"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4">
+
+            <!-- LANGUAGE -->
+            <div class="relative">
+
+                <button
+                    id="language-btn"
+                    type="button"
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 transition"
+                >
+
+                    <svg class="icon">
+                        <use href="#icon-language"></use>
+                    </svg>
+
+                    <span id="current-language">
+                        English
+                    </span>
+
+                    <svg class="icon" style="width:18px;height:18px">
+                        <use href="#icon-chevron"></use>
+                    </svg>
+
+                </button>
+
+
+                <div
+                    id="language-menu"
+                    class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
+                >
+
+                    <button
+                        type="button"
+                        class="language-option w-full text-left px-4 py-3"
+                        data-lang="en"
+                    >
+                        English
+                    </button>
+
+                    <button
+                        type="button"
+                        class="language-option w-full text-left px-4 py-3"
+                        data-lang="ta"
+                    >
+                        தமிழ்
+                    </button>
+
+                    <button
+                        type="button"
+                        class="language-option w-full text-left px-4 py-3"
+                        data-lang="hi"
+                    >
+                        हिन्दी
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTIFICATION -->
+            <div class="hidden sm:block relative text-gray-700">
+
+                <svg class="icon">
+                    <use href="#icon-bell"></use>
+                </svg>
+
+                <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+
+            </div>
+
+
+            <!-- SIGN IN -->
+            <button
+                type="button"
+                class="primary text-white px-6 py-3 rounded-full font-bold hover:opacity-90 transition"
+            >
+                Sign In
+            </button>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="pt-32 pb-14 px-6 max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+
+    <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-5">
+
+        <div>
+
+            <span
+                id="advanced-title"
+                class="green-text font-bold tracking-widest uppercase text-sm"
+            >
+                Advanced Diagnostics
+            </span>
+
+            <h1
+                id="ai-disease-title"
+                class="text-4xl md:text-5xl font-extrabold primary-text mt-2"
+            >
+                AI Disease Detection
+            </h1>
+
+        </div>
+
+        <p
+            id="header-description"
+            class="text-gray-600 max-w-md text-lg"
+        >
+            Identify crop infections with AI and receive treatment advice.
+        </p>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+
+        <!-- =====================================================
+             LEFT
+        ====================================================== -->
+
+        <section class="lg:col-span-8 flex flex-col gap-6">
+
+
+            <!-- UPLOAD CARD -->
+
+            <div class="glass-card rounded-3xl p-8 min-h-[430px] flex items-center justify-center">
+
+                <div class="text-center w-full">
+
+                    <!-- ICON -->
+
+                    <div class="w-28 h-28 mx-auto rounded-full green-bg flex items-center justify-center mb-7">
+
+                        <svg
+                            class="icon-xl primary-text"
+                        >
+                            <use href="#icon-leaf"></use>
+                        </svg>
+
+                    </div>
+
+
+                    <!-- TITLE -->
+
+                    <h2
+                        id="upload-title"
+                        class="text-2xl md:text-3xl font-bold primary-text mb-3"
+                    >
+                        Upload or Capture Image
+                    </h2>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <p
+                        id="upload-description"
+                        class="text-gray-600 max-w-xl mx-auto mb-9 text-lg"
+                    >
+                        Scan affected leaves or fruits for instant AI identification and treatment advice.
+                    </p>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="flex flex-wrap justify-center gap-4">
+
+                        <!-- CAPTURE -->
+
+                        <button
+                            id="capture-btn"
+                            type="button"
+                            class="primary text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition"
+                        >
+
+                            <svg class="icon">
+                                <use href="#icon-camera"></use>
+                            </svg>
+
+                            <span id="capture-btn-text">
+                                Capture Live
+                            </span>
+
+                        </button>
+
+
+                        <!-- CHOOSE FILE -->
+
+                        <button
+                            id="choose-file-btn"
+                            type="button"
+                            class="bg-white text-[#003d2b] border border-gray-200 px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-50 transition"
+                        >
+
+                            <svg class="icon">
+                                <use href="#icon-upload"></use>
+                            </svg>
+
+                            <span id="choose-file-text">
+                                Choose File
+                            </span>
+
+                        </button>
+
+
+                        <!-- FILE -->
+
+                        <input
+                            id="leaf-image-input"
+                            type="file"
+                            accept="image/*"
+                            class="hidden-input"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULTS -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- DIAGNOSIS -->
+
+                <div class="glass-card rounded-3xl p-7">
+
+                    <div class="flex items-center justify-between mb-7">
+
+                        <h3
+                            id="diagnosis-title"
+                            class="text-2xl font-bold primary-text"
+                        >
+                            Diagnosis
+                        </h3>
+
+                        <span
+                            id="active-scan-text"
+                            class="bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full text-xs font-bold"
+                        >
+                            Active Scan
+                        </span>
+
+                    </div>
+
+
+                    <div class="flex items-start gap-4 mb-7">
+
+                        <div class="w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center text-red-500">
+
+                            <svg class="icon-lg">
+                                <use href="#icon-warning"></use>
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <p
+                                id="identified-disease-label"
+                                class="text-gray-600 mb-1"
+                            >
+                                Identified Disease
+                            </p>
+
+                            <h4
+                                id="disease-result"
+                                class="text-xl font-bold primary-text"
+                            >
+                                Awaiting Image
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIDENCE -->
+
+                    <div>
+
+                        <div class="flex justify-between mb-2">
+
+                            <span
+                                id="confidence-label"
+                                class="text-gray-600"
+                            >
+                                Confidence Score
+                            </span>
+
+                            <span
+                                id="confidence-result"
+                                class="font-bold green-text"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+
+                        <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+
+                            <div
+                                id="confidence-bar"
+                                class="green-bg h-full progress-bar"
+                                style="width:0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TREATMENT -->
+
+                <div class="glass-card rounded-3xl p-7">
+
+                    <h3
+                        id="treatment-title"
+                        class="text-2xl font-bold primary-text mb-7"
+                    >
+                        Treatment Plan
+                    </h3>
+
+
+                    <ul
+                        id="treatment-list"
+                        class="space-y-5"
+                    >
+
+                        <li class="flex gap-3">
+
+                            <svg
+                                class="icon green-text flex-shrink-0"
+                            >
+                                <use href="#icon-info"></use>
+                            </svg>
+
+                            <p class="text-gray-600">
+                                Upload a crop image to receive treatment advice.
+                            </p>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RIGHT
+        ====================================================== -->
+
+        <aside class="lg:col-span-4 flex flex-col gap-6">
+
+
+            <!-- KRISHI AI -->
+
+            <div class="glass-card rounded-3xl overflow-hidden flex flex-col h-[570px]">
+
+
+                <!-- HEADER -->
+
+                <div class="primary p-6 flex items-center gap-4 text-white">
+
+                    <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center">
+
+                        <svg class="icon-lg">
+                            <use href="#icon-agriculture"></use>
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3
+                            id="krishi-ai-title"
+                            class="text-xl font-bold"
+                        >
+                            Krishi AI
+                        </h3>
+
+                        <p
+                            id="krishi-status"
+                            class="text-white/70 text-sm"
+                        >
+                            Virtual Agronomist • Online
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGES -->
+
+                <div
+                    id="krishi-chat-messages"
+                    class="flex-1 p-5 overflow-y-auto space-y-4 bg-white/60"
+                >
+
+                    <div class="chat-ai">
+
+                        <p
+                            id="welcome-message"
+                            class="leading-relaxed"
+                        >
+                            Hello! I'm Krishi. Ask me about crops, irrigation, diseases, fertilizers, weather or farming.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INPUT -->
+
+                <div class="p-4 border-t bg-white">
+
+                    <div class="flex gap-2 items-center bg-gray-100 rounded-full px-4 py-1">
+
+                        <input
+                            id="krishi-chat-input"
+                            type="text"
+                            placeholder="Ask Krishi AI..."
+                            class="flex-1 bg-transparent border-none outline-none focus:ring-0 py-3 text-gray-700"
+                        >
+
+
+                        <button
+                            id="mic-btn"
+                            type="button"
+                            class="p-2 text-[#003d2b] rounded-full hover:bg-gray-200"
+                            title="Voice input"
+                        >
+
+                            <svg class="icon">
+                                <use href="#icon-mic"></use>
+                            </svg>
+
+                        </button>
+
+
+                        <button
+                            id="krishi-chat-send"
+                            type="button"
+                            class="p-3 bg-[#3e9b70] text-white rounded-full hover:bg-[#328660] transition"
+                            title="Send"
+                        >
+
+                            <svg class="icon">
+                                <use href="#icon-send"></use>
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OFFICERS -->
+
+            <div class="glass-card rounded-3xl p-7">
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <h3
+                        id="officer-title"
+                        class="text-2xl font-bold primary-text"
+                    >
+                        Nearby Officers
+                    </h3>
+
+                    <svg class="icon">
+                        <use href="#icon-menu"></use>
+                    </svg>
+
+                </div>
+
+
+                <!-- MAP -->
+
+                <div class="w-full h-40 rounded-2xl green-bg flex items-center justify-center mb-5 text-[#003d2b]">
+
+                    <svg class="icon-xl">
+                        <use href="#icon-location"></use>
+                    </svg>
+
+                </div>
+
+
+                <!-- OFFICER -->
+
+                <div class="flex items-center gap-4 mb-5">
+
+                    <div class="w-12 h-12 rounded-full primary flex items-center justify-center text-white">
+
+                        <svg class="icon">
+                            <use href="#icon-person"></use>
+                        </svg>
+
+                    </div>
+
+
+                    <div class="flex-1">
+
+                        <p class="font-bold primary-text">
+                            District Agriculture Officer
+                        </p>
+
+                        <p
+                            id="officer-distance"
+                            class="text-sm text-gray-600"
+                        >
+                            District Agriculture Officer • Nearby
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VIDEO -->
+
+                <button
+                    id="video-consult-btn"
+                    type="button"
+                    class="w-full primary text-white py-4 rounded-full font-bold flex items-center justify-center gap-3 hover:opacity-90 transition"
+                >
+
+                    <svg class="icon">
+                        <use href="#icon-video"></use>
+                    </svg>
+
+                    <span id="video-consult-text">
+                        Immediate Video Consult
+                    </span>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="bg-[#002d20] text-white py-12 px-6 mt-10">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
+        <!-- DESCRIPTION -->
+
+        <div>
+
+            <span class="text-2xl font-black text-[#65d59a]">
+                Digital Krishi Officer
+            </span>
+
+            <p
+                id="footer-description"
+                class="mt-4 text-white/60 leading-relaxed"
+            >
+                Revolutionizing agriculture through precision AI and real-time field data.
+            </p>
+
+        </div>
+
+
+        <!-- RESOURCES -->
+
+        <div>
+
+            <h4
+                id="footer-resources"
+                class="font-bold mb-4"
+            >
+                Resources
+            </h4>
+
+            <div class="flex flex-col gap-2 text-white/60">
+
+                <a href="#" class="hover:text-white">
+                    About Us
+                </a>
+
+                <a href="#" class="hover:text-white">
+                    Crop Science
+                </a>
+
+                <a href="#" class="hover:text-white">
+                    Contact Support
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- LEGAL -->
+
+        <div>
+
+            <h4
+                id="footer-legal"
+                class="font-bold mb-4"
+            >
+                Legal
+            </h4>
+
+            <div class="flex flex-col gap-2 text-white/60">
+
+                <a href="#" class="hover:text-white">
+                    Terms of Service
+                </a>
+
+                <a href="#" class="hover:text-white">
+                    Privacy Policy
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUBSCRIBE -->
+
+        <div>
+
+            <p
+                id="footer-subscribe"
+                class="text-white/60 mb-4"
+            >
+                Subscribe to Insights
+            </p>
+
+            <div class="flex bg-white/10 rounded-full p-1">
+
+                <input
+                    id="subscribe-email"
+                    type="email"
+                    placeholder="Email address"
+                    class="bg-transparent border-none outline-none focus:ring-0 text-white px-4 flex-1"
+                >
+
+                <button
+                    id="subscribe-btn"
+                    type="button"
+                    class="bg-[#3e9b70] text-white p-3 rounded-full"
+                >
+
+                    <svg class="icon">
+                        <use href="#icon-arrow"></use>
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/10 text-center">
+
+        <p class="text-white/40 text-sm">
+            © 2026 Digital Krishi Officer. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="disease-detection.js"></script>
+
+</body>
+</html>
