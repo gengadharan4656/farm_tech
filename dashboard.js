@@ -45,23 +45,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            const results =
-                await Promise.allSettled([
+           const results =
+    await Promise.allSettled([
 
-                    fetch(
-                        `${API_BASE_URL}/api/weather`
-                    ),
+        // Weather is now static — no weather API
+        Promise.resolve({
+            ok: true,
+            json: async () => ({
+                location: "Kariapatti, Virudhunagar",
+                temperature: 32,
+                condition: "Partly Cloudy",
+                humidity: 65,
+                rain_probability: 20,
+                wind_speed: 14
+            })
+        }),
 
-                    fetch(
-                        `${API_BASE_URL}/api/ai-insights`
-                    ),
+        fetch(
+            `${API_BASE_URL}/api/ai-insights`
+        ),
 
-                    fetch(
-                        `${API_BASE_URL}/api/orders`
-                    )
+        fetch(
+            `${API_BASE_URL}/api/orders`
+        )
 
-                ]);
-
+    ]);
 
             // ======================================
             // WEATHER
