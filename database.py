@@ -6,7 +6,12 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./farmtech.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Vercel serverless filesystem:
+# use /tmp when DATABASE_URL is not configured
+if not DATABASE_URL:
+    DATABASE_URL = "sqlite:////tmp/farmtech.db"
 
 if DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
