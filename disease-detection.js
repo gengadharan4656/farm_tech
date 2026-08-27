@@ -671,6 +671,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "#krishi-chat-messages"
         );
 
+    const conversationHistory = [];
+    const MAX_CHAT_HISTORY = 12;
+
 
     // ========================================================
     // ADD CHAT MESSAGE
@@ -833,8 +836,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             message:
                                 message,
 
-                            language:
-                                currentLanguage
+                            history:
+                                conversationHistory.slice(-MAX_CHAT_HISTORY)
                         })
                     }
                 );
@@ -850,12 +853,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data =
                 await response.json();
-
-
-            console.log(
-                "Chat API response:",
-                data
-            );
 
 
             removeLoadingMessage();
@@ -874,6 +871,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply,
                     false
                 );
+
+                conversationHistory.push(
+                    { role: "user", content: message },
+                    { role: "assistant", content: reply }
+                );
+
+                if (conversationHistory.length > MAX_CHAT_HISTORY) {
+                    conversationHistory.splice(
+                        0,
+                        conversationHistory.length - MAX_CHAT_HISTORY
+                    );
+                }
 
             } else {
 
