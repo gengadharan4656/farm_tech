@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException
+from dotenv import load_dotenv
 import requests
 import os
+
+load_dotenv()
 
 router = APIRouter(prefix="/api", tags=["Weather"])
 
@@ -8,7 +11,7 @@ router = APIRouter(prefix="/api", tags=["Weather"])
 # OPENWEATHERMAP CONFIGURATION
 # =========================================================
 
-API_KEY = "166579a296275c15133c10a67945db7e"
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 # Kariyapatti, Virudhunagar, Tamil Nadu
 LATITUDE = 9.4600
@@ -21,6 +24,12 @@ LONGITUDE = 78.0900
 
 @router.get("/weather")
 def get_weather():
+
+    if not API_KEY:
+        raise HTTPException(
+            status_code=503,
+            detail="Weather service is not configured on the server."
+        )
 
     url = "https://api.openweathermap.org/data/2.5/weather"
 

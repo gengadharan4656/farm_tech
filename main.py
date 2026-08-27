@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base
-from routers import products
-from routers import weather
-from routers import insights
-from routers import chat
-from routers import disease
-from routers import orders
+import products
+import weather
+import insights
+import chat
+import disease
+import orders
 
 
 # Create database tables
