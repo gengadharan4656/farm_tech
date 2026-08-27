@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ========================================================
     // API
     // ========================================================
-
-    const API_BASE_URL = "https://farm-tech-kappa.vercel.app";
+const API_BASE_URL = "";
 
 
     // ========================================================
