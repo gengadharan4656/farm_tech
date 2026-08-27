@@ -1,3 +1,4 @@
+@'
 import os
 
 from dotenv import load_dotenv
@@ -6,11 +7,11 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./farmtech.db")
 
-# Vercel serverless filesystem:
-# use /tmp when DATABASE_URL is not configured
-if not DATABASE_URL:
+# Vercel's deployed filesystem is read-only.
+# SQLite can only write to /tmp in a Vercel serverless function.
+if os.getenv("VERCEL") and DATABASE_URL.startswith("sqlite"):
     DATABASE_URL = "sqlite:////tmp/farmtech.db"
 
 if DATABASE_URL.startswith("sqlite"):
@@ -40,3 +41,4 @@ def get_db():
         yield db
     finally:
         db.close()
+'@ | Set-Content database.py
